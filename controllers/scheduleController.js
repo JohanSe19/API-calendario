@@ -59,15 +59,38 @@ async function editSchedule(req, res) {
     console.log(chalk.red(" ======= Init error editSchedule ======= "));
     console.log(error);
     return res.status(Utilities.COD_RESPONSE_HTTP_ERROR).json({
-      ResponseCode: Utilities.COD_RESPONSE_ERROR_CREATE,
+      ResponseCode: Utilities.COD_RESPONSE_ERROR_UPDATE,
       ResponseMessage:
         "Ocurrió un error al guardar la informacion, contacte al administrador",
     });
   }
 }
 
+async function deleteSchedule(req, res) {
+  try {
+    console.log(chalk.yellow(" ======= Init deleteSchedule ======= "));
+    const {scheduleId} = req.params;
+
+    const updateSchedule = await Schedule.remove({_id:ObjectID(scheduleId)});
+
+    console.log(chalk.yellow(" ======= Finish deleteSchedule ======= "));
+    return res.status(Utilities.COD_RESPONSE_HTTP_OK).json({
+      ResponseCode: Utilities.COD_RESPONSE_SUCCESS,
+      ResponseMessage: "Se ha eliminado el evento correctamente.",
+    });
+  } catch (error) {
+    console.log(chalk.red(" ======= Init error deleteSchedule ======= "));
+    console.log(error);
+    return res.status(Utilities.COD_RESPONSE_HTTP_ERROR).json({
+      ResponseCode: Utilities.COD_RESPONSE_ERROR_DELETE,
+      ResponseMessage:
+        "Ocurrió un error, contacte al administrador",
+    });
+  }
+}
 
 module.exports = {
   createSchedule,
-  editSchedule
+  editSchedule,
+  deleteSchedule
 };

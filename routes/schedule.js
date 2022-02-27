@@ -8,6 +8,7 @@ route.post("/createSchedule", scheduleController.createSchedule);
 
 route.post("/editSchedule", scheduleController.editSchedule);
 
+route.delete("/deleteSchedule/scheduleId/:scheduleId/", scheduleController.deleteSchedule);
 
 
 module.exports = route;
