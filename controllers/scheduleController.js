@@ -4,15 +4,15 @@ const Schedule = require("../models/Schedule");
 const ObjectID = require("mongodb").ObjectID;
 const moment = require("moment");
 
-async function createSchedule(req, res) {
+async function createEvent(req, res) {
   try {
     console.log(chalk.yellow(" ======= Init createSchedule ======= "));
-    const { dateSchedule, description, action } = req.body;
-    let dateScheduleTransform = moment(dateSchedule);
+    const { dateEvent, description, action } = req.body;
+    let dateEventTransform = moment(dateEvent);
 
     const newSchedule = new Schedule({
       action: ObjectID(action),
-      dateSchedule: dateScheduleTransform,
+      dateSchedule: dateEventTransform,
       description: description,
     });
 
@@ -34,16 +34,16 @@ async function createSchedule(req, res) {
   }
 }
 
-async function editSchedule(req, res) {
+async function editEvent(req, res) {
   try {
     console.log(chalk.yellow(" ======= Init editSchedule ======= "));
-    const {scheduleId, dateSchedule, description } = req.body;
-    const dateScheduleTransform = moment(dateSchedule);
+    const {eventId, dateEvent, description } = req.body;
+    const dateEventTransform = moment(dateEvent);
 
     const update ={
-        _id:scheduleId,
+        _id:eventId,
         $set:{
-            dateSchedule:dateScheduleTransform,
+            dateSchedule:dateEventTransform,
             description: description
         }
     }
@@ -66,12 +66,12 @@ async function editSchedule(req, res) {
   }
 }
 
-async function deleteSchedule(req, res) {
+async function deleteEvent(req, res) {
   try {
     console.log(chalk.yellow(" ======= Init deleteSchedule ======= "));
-    const {scheduleId} = req.params;
+    const {eventId} = req.params;
 
-    const updateSchedule = await Schedule.remove({_id:ObjectID(scheduleId)});
+    const updateSchedule = await Schedule.remove({_id:ObjectID(eventId)});
 
     console.log(chalk.yellow(" ======= Finish deleteSchedule ======= "));
     return res.status(Utilities.COD_RESPONSE_HTTP_OK).json({
@@ -90,7 +90,7 @@ async function deleteSchedule(req, res) {
 }
 
 module.exports = {
-  createSchedule,
-  editSchedule,
-  deleteSchedule
+  createEvent,
+  editEvent,
+  deleteEvent
 };

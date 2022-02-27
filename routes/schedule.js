@@ -4,11 +4,11 @@ const route = require("express").Router();
 /* const validator = require("../middleware/validator"); */
 
 
-route.post("/createSchedule", scheduleController.createSchedule);
+route.post("/createEvent", scheduleController.createEvent);
 
-route.post("/editSchedule", scheduleController.editSchedule);
+route.post("/editEvent", scheduleController.editEvent);
 
-route.delete("/deleteSchedule/scheduleId/:scheduleId/", scheduleController.deleteSchedule);
+route.delete("/deleteEvent/eventId/:eventId/", scheduleController.deleteEvent);
 
 
 module.exports = route;
