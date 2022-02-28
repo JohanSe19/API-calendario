@@ -3,6 +3,7 @@ const chalk = require("chalk");
 const Schedule = require("../models/Schedule");
 const ObjectID = require("mongodb").ObjectID;
 const moment = require("moment");
+const { dumpError } = require("../utils/customFunctions.js");
 
 async function createEvent(req, res) {
   try {
@@ -25,7 +26,7 @@ async function createEvent(req, res) {
     });
   } catch (error) {
     console.log(chalk.red(" ======= Init error createSchedule ======= "));
-    console.log(error);
+    dumpError(error, "createEvent");
     return res.status(Utilities.COD_RESPONSE_HTTP_ERROR).json({
       ResponseCode: Utilities.COD_RESPONSE_ERROR_CREATE,
       ResponseMessage:
@@ -37,16 +38,16 @@ async function createEvent(req, res) {
 async function editEvent(req, res) {
   try {
     console.log(chalk.yellow(" ======= Init editSchedule ======= "));
-    const {eventId, dateEvent, description } = req.body;
+    const { eventId, dateEvent, description } = req.body;
     const dateEventTransform = moment(dateEvent);
 
-    const update ={
-        _id:eventId,
-        $set:{
-            dateSchedule:dateEventTransform,
-            description: description
-        }
-    }
+    const update = {
+      _id: eventId,
+      $set: {
+        dateSchedule: dateEventTransform,
+        description: description,
+      },
+    };
 
     const updateSchedule = await Schedule.findOneAndUpdate(update);
 
@@ -69,9 +70,9 @@ async function editEvent(req, res) {
 async function deleteEvent(req, res) {
   try {
     console.log(chalk.yellow(" ======= Init deleteSchedule ======= "));
-    const {eventId} = req.params;
+    const { eventId } = req.params;
 
-    const updateSchedule = await Schedule.remove({_id:ObjectID(eventId)});
+    const updateSchedule = await Schedule.remove({ _id: ObjectID(eventId) });
 
     console.log(chalk.yellow(" ======= Finish deleteSchedule ======= "));
     return res.status(Utilities.COD_RESPONSE_HTTP_OK).json({
@@ -83,8 +84,7 @@ async function deleteEvent(req, res) {
     console.log(error);
     return res.status(Utilities.COD_RESPONSE_HTTP_ERROR).json({
       ResponseCode: Utilities.COD_RESPONSE_ERROR_DELETE,
-      ResponseMessage:
-        "Ocurrió un error, contacte al administrador",
+      ResponseMessage: "Ocurrió un error, contacte al administrador",
     });
   }
 }
@@ -99,7 +99,7 @@ async function listEvent(req, res) {
     return res.status(Utilities.COD_RESPONSE_HTTP_OK).json({
       ResponseCode: Utilities.COD_RESPONSE_SUCCESS,
       ResponseMessage: "Se ha obtenido la información correctamente.",
-      data: dataReport
+      data: dataReport,
     });
   } catch (error) {
     console.log(chalk.red(" ======= Init error listEvent ======= "));
@@ -116,5 +116,5 @@ module.exports = {
   createEvent,
   editEvent,
   deleteEvent,
-  listEvent
+  listEvent,
 };
