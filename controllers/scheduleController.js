@@ -89,28 +89,6 @@ async function deleteEvent(req, res) {
   }
 }
 
-async function listEvent(req, res) {
-  try {
-    console.log(chalk.yellow(" ======= Init listEvent ======= "));
-
-    const dataReport = await Schedule.find();
-
-    console.log(chalk.yellow(" ======= Finish listEvent ======= "));
-    return res.status(Utilities.COD_RESPONSE_HTTP_OK).json({
-      ResponseCode: Utilities.COD_RESPONSE_SUCCESS,
-      ResponseMessage: "Se ha obtenido la información correctamente.",
-      data: dataReport
-    });
-  } catch (error) {
-    console.log(chalk.red(" ======= Init error listEvent ======= "));
-    console.log(error);
-    return res.status(Utilities.COD_RESPONSE_HTTP_ERROR).json({
-      ResponseCode: Utilities.COD_RESPONSE_ERROR_LIST,
-      ResponseMessage:
-        "Ocurrió un error al obtener la información, contacte al administrador",
-    });
-  }
-}
 
 module.exports = {
   createEvent,
