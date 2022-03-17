@@ -30,7 +30,7 @@ async function createEvent(req, res) {
     return res.status(Utilities.COD_RESPONSE_HTTP_ERROR).json({
       ResponseCode: Utilities.COD_RESPONSE_ERROR_CREATE,
       ResponseMessage:
-        "Ocurrió un error al guardar la informacion, contacte al administrador",
+        "Ocurrió",
     });
   }
 }
